@@ -1,25 +1,42 @@
 # Allison Allain / iTriage Objective-C Style Guide
-# Attributions:
-# NYTimes Objective-C Style Guide: https://github.com/NYTimes/objective-c-style-guide
-# Apple: https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CodingGuidelines/CodingGuidelines.html
-# Google: https://google-styleguide.googlecode.com/svn/trunk/objcguide.xml
-# Ray Wenderlich: http://www.raywenderlich.com/62570/objective-c-style-guide
 
-
-This style guide outlines the coding conventions of the iOS team at The New York Times. We welcome your feedback in [issues](https://github.com/NYTimes/objetive-c-style-guide/issues), [pull requests](https://github.com/NYTimes/objetive-c-style-guide/pulls) and [tweets](https://twitter.com/nytimesmobile). Also, [we're hiring](http://jobs.nytco.com/job/New-York-iOS-Developer-Job-NY/2572221/).
-
-Thanks to all of [our contributors](https://github.com/NYTimes/objective-c-style-guide/contributors).
-
-## Introduction
-
-Here are some of the documents from Apple that informed the style guide. If something isn't mentioned here, it's probably covered in great detail in one of these:
-
-* [The Objective-C Programming Language](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjectiveC/Introduction/introObjectiveC.html)
-* [Cocoa Fundamentals Guide](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CocoaFundamentals/Introduction/Introduction.html)
-* [Coding Guidelines for Cocoa](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CodingGuidelines/CodingGuidelines.html)
-* [iOS App Programming Guide](http://developer.apple.com/library/ios/#documentation/iphone/conceptual/iphoneosprogrammingguide/Introduction/Introduction.html)
+# Attributions
+* [NYTimes Objective-C Style Guide] (https://github.com/NYTimes/objective-c-style-guide)
+* [Apple] (https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CodingGuidelines/CodingGuidelines.html)
+* [Google] (https://google-styleguide.googlecode.com/svn/trunk/objcguide.xml)
+* [Ray Wenderlich] (http://www.raywenderlich.com/62570/objective-c-style-guide)
 
 ## Table of Contents
+
+--- line space before blocks
+--- Apple Doc
+--- GCC formatting for frames
+--- Keep methods short
+--- (ban ternary operator?)
+--- methods should have names before the : for each parameter.
+--- in @interface lines, there should be a space before and after each : 
+--- methods should be formatted with a space after the '-' and before each ':' and before each '*', there should be no other spaces in a method name.
+--- Every class should have an interface in the .m for private methods and properties
+--- Every class should have a dealloc 
+--- NSDictionaries should use the new notation: NSDictionary *bucketDict = @{key: bucket};
+
+
+Coding Standards more than style guide / Common problems seen in project
+--- No longer use primitive data types
+--- self. should not be used to access properties in init methods.
+--- every class written should user arc
+--- ALL parsing will be done with JSON Parser
+--- objects in an array should never be counted in a for loop unless the number of objects in the array is at rick of changing in the body of the loop:     for (int i = 0; i < [self.buckets count]; i++)  is incorrect.  The items will be counted every single run through.
+--- 
+
+Ideally - 
+--- Strings/Copy should be in a localization file and not in line
+--- As few magic numbers as possible.  when magic numbers are necessary make them 
+static NSString * const FONT_NAME = @"Helvetica";
+static CGFloat const  NUMBER_TEXT_SIZE_IN_CIRCLE_PERCENTAGE = 0.40;
+--- If you use a method across many classes that are similar consider abstraction or categories.
+
+
 
 * [Dot-Notation Syntax](#dot-notation-syntax)
 * [Spacing](#spacing)
@@ -30,7 +47,7 @@ Here are some of the documents from Apple that informed the style guide. If some
 * [Variables](#variables)
 * [Naming](#naming)
 * [Comments](#comments)
-* [Init & Dealloc](#init-and-dealloc)
+* [Init & Dealloc](#init-and-dealloc) 
 * [Literals](#literals)
 * [CGRect Functions](#cgrect-functions)
 * [Constants](#constants)
@@ -99,17 +116,7 @@ if (!error) return success;
 
 ### Ternary Operator
 
-The Ternary operator, ? , should only be used when it increases clarity or code neatness. A single condition is usually all that should be evaluated. Evaluating multiple conditions is usually more understandable as an if statement, or refactored into instance variables.
-
-**For example:**
-```objc
-result = a > b ? x : y;
-```
-
-**Not:**
-```objc
-result = a > b ? x = c > d ? c : d : y;
-```
+Avoid ternary operators unless they are extremely simple.     
 
 ## Error handling
 
