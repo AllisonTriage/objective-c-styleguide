@@ -125,7 +125,7 @@ if (!error) return success;
 
 ### Ternary Operator
 
-Avoid ternary operators unless they are extremely simple.     
+Do not use Ternary Operators.   
 
 ## Error handling
 
