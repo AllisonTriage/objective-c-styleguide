@@ -92,7 +92,12 @@ else {
 //Do something else
 }
 ```
-* There should be exactly one blank line between methods to aid in visual clarity and organization. Whitespace within methods should separate functionality, but often there should probably be new methods.
+* There should be exactly one blank line before each of the following:
+  * an if statement 
+  * a block
+  * before a method
+  * a new group of functionaly within a method, however, if a method has disctinct groups of separate functionality, it should probably be broken apart into new methods.
+
 * `@synthesize` and `@dynamic` should each be declared on new lines in the implementation.
 
 ## Conditionals
