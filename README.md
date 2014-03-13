@@ -6,13 +6,17 @@
 * [Google] (https://google-styleguide.googlecode.com/svn/trunk/objcguide.xml)
 * [Ray Wenderlich] (http://www.raywenderlich.com/62570/objective-c-style-guide)
 
+# Overview
+
+This guide is primarily based off of the [NYTimes Objective-C Style Guide] (https://github.com/NYTimes/objective-c-style-guide).  Several cutomizations/additions have been made which are important to the iTriage team.  Suggestions for changes will be accepted in the form of pull requests.
+
 ## Table of Contents
 
 --- line space before blocks
 --- Apple Doc
 --- GCC formatting for frames
 --- Keep methods short
---- (ban ternary operator?)
+--- ban ternary operator!
 --- methods should have names before the : for each parameter.
 --- in @interface lines, there should be a space before and after each : 
 --- methods should be formatted with a space after the '-' and before each ':' and before each '*', there should be no other spaces in a method name.
