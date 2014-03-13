@@ -96,7 +96,7 @@ else {
   * an if statement 
   * a block
   * before a method
-  * a new group of functionaly within a method, however, if a method has disctinct groups of separate functionality, it should probably be broken apart into new methods.
+  * a new group of functionality within a method, however, if a method has disctinct groups of separate functionality, it should probably be broken apart into new methods.
 
 * `@synthesize` and `@dynamic` should each be declared on new lines in the implementation.
 
