@@ -1,18 +1,21 @@
-# Allison Allain / iTriage Objective-C Style Guide
+## Allison Allain / iTriage Objective-C Style Guide
 
-# Attributions
+## Attributions
 * [NYTimes Objective-C Style Guide] (https://github.com/NYTimes/objective-c-style-guide)
 * [Apple] (https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CodingGuidelines/CodingGuidelines.html)
 * [Google] (https://google-styleguide.googlecode.com/svn/trunk/objcguide.xml)
 * [Ray Wenderlich] (http://www.raywenderlich.com/62570/objective-c-style-guide)
 
-# Overview
+## Overview
 
 This guide is primarily based off of the [NYTimes Objective-C Style Guide] (https://github.com/NYTimes/objective-c-style-guide).  Several cutomizations/additions have been made which are important to the iTriage team.  Suggestions for changes will be accepted in the form of pull requests.
 
+The expecation is this: 
+* All new functionality will adhere to these standards.  
+* All code the iOS team touches going forward will be updated to adhere to these standards.
+
 ## Table of Contents
 
---- line space before blocks
 --- Apple Doc
 --- GCC formatting for frames
 --- Keep methods short
@@ -23,7 +26,7 @@ This guide is primarily based off of the [NYTimes Objective-C Style Guide] (http
 --- Every class should have an interface in the .m for private methods and properties
 --- Every class should have a dealloc 
 --- NSDictionaries should use the new notation: NSDictionary *bucketDict = @{key: bucket};
-
+--- Deprication and rewrites.
 
 Coding Standards more than style guide / Common problems seen in project
 --- No longer use primitive data types
