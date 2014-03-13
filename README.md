@@ -11,12 +11,24 @@
 This guide is primarily based off of the [NYTimes Objective-C Style Guide] (https://github.com/NYTimes/objective-c-style-guide).  Several cutomizations/additions have been made which are important to the iTriage team.  Suggestions for changes will be accepted in the form of pull requests.
 
 The expecation is this: 
+
 * All new functionality will adhere to these standards.  
 * All code the iOS team touches going forward will be updated to adhere to these standards.
 
 ## Table of Contents
 
---- Apple Doc
+* [Documentation] (#Documentation)
+    * [Comments] (#Comments)
+    * [Apple Doc] (#AppleDoc)
+    * [Deprecation] (#Deprecation)
+
+* [Formatting] (#Formatting)
+    * [Line Spacing] (#LineSpacing)
+    * [Character Spacing] (#CharacterSpacing)
+    * [Method Formatting] (#MethodFormatting)
+
+
+
 --- GCC formatting for frames
 --- Keep methods short
 --- ban ternary operator!
@@ -46,14 +58,12 @@ static CGFloat const  NUMBER_TEXT_SIZE_IN_CIRCLE_PERCENTAGE = 0.40;
 
 
 * [Dot-Notation Syntax](#dot-notation-syntax)
-* [Spacing](#spacing)
 * [Conditionals](#conditionals)
   * [Ternary Operator](#ternary-operator)
 * [Error handling](#error-handling)
 * [Methods](#methods)
 * [Variables](#variables)
 * [Naming](#naming)
-* [Comments](#comments)
 * [Init & Dealloc](#init-and-dealloc) 
 * [Literals](#literals)
 * [CGRect Functions](#cgrect-functions)
@@ -64,6 +74,44 @@ static CGFloat const  NUMBER_TEXT_SIZE_IN_CIRCLE_PERCENTAGE = 0.40;
 * [Booleans](#booleans)
 * [Singletons](#singletons)
 * [Xcode Project](#xcode-project)
+
+
+
+## Documentation
+
+#### Comments
+When they are needed, comments should be used to explain **why** a particular piece of code does something. Any comments that are used must be kept up-to-date or deleted.
+
+Block comments should generally be avoided, as code should be as self-documenting as possible, with only the need for intermittent, few-line explanations. This does not apply to those comments used to generate documentation.
+
+If you comment out large amounts of legacy code, remember that legacy code is available through version control and therefore unnecessary to keep inline.  After the code is found to be unnecssary, simply delete it.
+
+#### Apple Doc
+
+
+#### Deprication
+
+
+
+## init and dealloc
+
+
+
+`dealloc` methods should be placed at the top of the implementation, directly after the `@synthesize` and `@dynamic` statements. `init` should be placed directly below the `dealloc` methods of any class.
+
+`init` methods should be structured like this:
+
+```objc
+- (instancetype)init {
+    self = [super init]; // or call the designated initalizer
+    if (self) {
+        // Custom initialization
+    }
+
+    return self;
+}
+```
+
 
 ## Dot-Notation Syntax
 
@@ -81,20 +129,22 @@ view.backgroundColor = [UIColor orangeColor];
 UIApplication.sharedApplication.delegate;
 ```
 
-## Spacing
+## LineSpacing
+## CharacterSpacing
 
 * Indent using 4 spaces. Never indent with tabs. Be sure to set this preference in Xcode.
 * Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
 
 **For example:**
-```objc
-if (user.isHappy) {
-//Do something
-}
-else {
-//Do something else
-}
-```
+
+  ```objc
+  if (user.isHappy) {
+  //Do something
+  }
+  else {
+  //Do something else
+    }
+  ```
 * There should be exactly one blank line before each of the following:
   * an if statement 
   * a block
@@ -233,29 +283,6 @@ Instance variables should be camel-case with the leading word being lowercase, a
 
 ```objc
 id varnm;
-```
-
-## Comments
-
-When they are needed, comments should be used to explain **why** a particular piece of code does something. Any comments that are used must be kept up-to-date or deleted.
-
-Block comments should generally be avoided, as code should be as self-documenting as possible, with only the need for intermittent, few-line explanations. This does not apply to those comments used to generate documentation.
-
-## init and dealloc
-
-`dealloc` methods should be placed at the top of the implementation, directly after the `@synthesize` and `@dynamic` statements. `init` should be placed directly below the `dealloc` methods of any class.
-
-`init` methods should be structured like this:
-
-```objc
-- (instancetype)init {
-    self = [super init]; // or call the designated initalizer
-    if (self) {
-        // Custom initialization
-    }
-
-    return self;
-}
 ```
 
 ## Literals
@@ -435,15 +462,3 @@ This will prevent [possible and sometimes prolific crashes](http://cocoasamurai.
 The physical files should be kept in sync with the Xcode project files in order to avoid file sprawl. Any Xcode groups created should be reflected by folders in the filesystem. Code should be grouped not only by type, but also by feature for greater clarity.
 
 When possible, always turn on "Treat Warnings as Errors" in the target's Build Settings and enable as many [additional warnings](http://boredzo.org/blog/archives/2009-11-07/warnings) as possible. If you need to ignore a specific warning, use [Clang's pragma feature](http://clang.llvm.org/docs/UsersManual.html#controlling-diagnostics-via-pragmas).
-
-# Other Objective-C Style Guides
-
-If ours doesn't fit your tastes, have a look at some other style guides:
-
-* [Google](http://google-styleguide.googlecode.com/svn/trunk/objcguide.xml)
-* [GitHub](https://github.com/github/objective-c-conventions)
-* [Adium](https://trac.adium.im/wiki/CodingStyle)
-* [Sam Soffes](https://gist.github.com/soffes/812796)
-* [CocoaDevCentral](http://cocoadevcentral.com/articles/000082.php)
-* [Luke Redpath](http://lukeredpath.co.uk/blog/my-objective-c-style-guide.html)
-* [Marcus Zarra](http://www.cimgf.com/zds-code-style-guide/)
