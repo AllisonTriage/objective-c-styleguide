@@ -7,9 +7,9 @@
 
 ## Overview
 
-This guide is primarily based off of the [NYTimes Objective-C Style Guide] (https://github.com/NYTimes/objective-c-style-guide). Sections written by the New York Times are noted by (NYT) following the section header, or following the paragraph if an entire section isn't warranted. Several cutomizations/additions have been made which are important to the iTriage team.  Suggestions for changes will be accepted in the form of pull requests.
+This guide is primarily based off of the [NYTimes Objective-C Style Guide] (https://github.com/NYTimes/objective-c-style-guide). Sections written by the New York Times are noted by (NYT) following the section header, or following the paragraph if an entire section isn't warranted. Several customization/additions have been made which are important to the iTriage team.  Suggestions for changes will be accepted in the form of pull requests.
 
-The expecation is this: 
+The expectation is this: 
 
 * All new functionality will adhere to these standards.  
 * All code the iOS team touches going forward will be updated to adhere to these standards.
@@ -79,7 +79,7 @@ When they are needed, comments should be used to explain **why** a particular pi
 
 Block comments should generally be avoided, as code should be as self-documenting as possible, with only the need for intermittent, few-line explanations. This does not apply to those comments used to generate documentation.
 
-If large amounts of legacy code are being considered for being commented out, remember that legacy code is available through version control and therefore unnecessary to keep in line.  After the code is found to be unnecssary, simply delete it.
+If large amounts of legacy code are being considered for being commented out, remember that legacy code is available through version control and therefore unnecessary to keep in line.  After the code is found to be unnecessary, simply delete it.
 
 #### Apple Doc
 
@@ -135,12 +135,12 @@ When new code is written which invalidates or obsoletes old code, the old code w
   * An if statement 
   * A block
   * Before a method
-  * A new group of functionality within a method, however, if a method has disctinct groups of separate functionality, it should probably be broken apart into new methods.
+  * A new group of functionality within a method, however, if a method has distinct groups of separate functionality, it should probably be broken apart into new methods.
 
 #### Methods
 
 * In method signatures, there should be a space after the scope (-/+ symbol). There should be a space between the method segments. (NYT)
-* Keep methods short, methods should exceute one idea, multiple ideas should be broken into smaller pieces.
+* Keep methods short, methods should execute one idea, multiple ideas should be broken into smaller pieces.
 * Methods will have names before the : for each parameter.
 * Every method will have a return type
 * Every parameter will have a type
@@ -158,7 +158,7 @@ When new code is written which invalidates or obsoletes old code, the old code w
 
 #### Init and Dealloc
 
-`self` will not be used to access properties in init methods, this incldes `self.variable` and `[self variable]`.
+`self` will not be used to access properties in init methods, this includes `self.variable` and `[self variable]`.
 
 `dealloc` methods should be placed at the top of the implementation, directly after the `@synthesize` and `@dynamic` statements. `init` should be placed directly below the `dealloc` methods of any class. (NYT)
 
@@ -166,7 +166,7 @@ When new code is written which invalidates or obsoletes old code, the old code w
 
 ```objc
 - (instancetype)init {
-    self = [super init]; // or call the designated initalizer
+    self = [super init]; // or call the designated initializer
     if (self) {
         // Custom initialization
     }
@@ -539,7 +539,7 @@ ALL parsing will be done using the third party library: [JSONModel] (http://www.
 
 The documentation is very helpful and is available here: [JSONModel Documentation] (https://github.com/icanzilb/JSONModel/blob/master/README.md#magical-data-modelling-framework-for-json).
 
-All classes which subclass JSONModel will override the keymapper method.
+All classes will subclass JSONModel will override the keymapper method.
 
 **For Example:**
 From [JSONModel Documentation] (https://github.com/icanzilb/JSONModel/blob/master/README.md#magical-data-modelling-framework-for-json)
