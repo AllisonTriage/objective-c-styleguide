@@ -30,7 +30,7 @@ The expecation is this:
 * [Classes] (#classes)
     * [Init and Dealloc](#init-and-dealloc) 
     * [Abstraction, Categories and Copied Code] (#abstraction,-categories-and-copied-code)
-    * [Multiple Classes in a File] (#multiple-classes-in-a-File)
+    * [Multiple Classes in a File] (#multiple-classes-in-a-file)
 
 * [Properties And Member Variables] (#properties-and-member-variables)
     * [Dot-Notation Syntax](#dot-notation-syntax)
@@ -41,7 +41,7 @@ The expecation is this:
     * [Image Naming](#image-naming)
     * [Constants](#constants)
     * [Literals](#literals)
-    * [Primitive Data Types](#Primitive-Data-Types)
+    * [Primitive Data Types](#primitive-data-types)
     * [Booleans](#booleans)
     * [Enumerated Types](#enumerated-types)
     * [Magic Numbers] (#magic-numbers)
