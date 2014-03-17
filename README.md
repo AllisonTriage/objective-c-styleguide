@@ -151,7 +151,7 @@ When new code is written which invalidates or obsoletes old code, the old code w
 ```
 
 ## Classes
-* `@synthesize` and `@dynamic` should each be declared on new lines in the implementation. (NYT)
+
 * `@interface` lines will should be a space before and after each : 
 * Every class should have an interface in the .m for private methods and properties
 * Every new class written will user ARC
@@ -185,6 +185,7 @@ Because the iTriage project has a large amount of data there are many cases wher
 
 
 ## Properties / Member Variables
+<!--Look up why dynamic should be used-->
 
 #### Dot-Notation Syntax (NYT)
 
@@ -305,19 +306,6 @@ static const NSTimeInterval fadetime = 1.7;
 
 Properties and local variables should be camel-case with the leading word being lowercase. 
 
-Instance variables should be camel-case with the leading word being lowercase, and should be prefixed with an underscore. This is consistent with instance variables synthesized automatically by LLVM. **If LLVM can synthesize the variable automatically, then let it.**
-
-**For example:**
-
-```objc
-@synthesize descriptiveVariableName = _descriptiveVariableName;
-```
-
-**Not:**
-
-```objc
-id varnm;
-```
 #### Image Naming (NYT)
 
 Image names should be named consistently to preserve organization and developer sanity. They should be named as one camel case string with a description of their purpose, followed by the un-prefixed name of the class or property they are customizing (if there is one), followed by a further description of color and/or placement, and finally their state.
@@ -470,30 +458,6 @@ if (!error) return success;
 #### Ternary Operator
 
 Do not use Ternary Operators.   
-
-#### Error handling (NYT)
-
-When methods return an error parameter by reference, switch on the returned value, not the error variable.
-
-**For example:**
-```objc
-NSError *error;
-if (![self trySomethingWithError:&error]) {
-    // Handle Error
-}
-```
-
-**Not:**
-```objc
-NSError *error;
-[self trySomethingWithError:&error];
-if (error) {
-    // Handle Error
-}
-```
-
-Some of Apple’s APIs write garbage values to the error parameter (if non-NULL) in successful cases, so switching on the error can cause false negatives (and subsequently crash).
-
 
 #### Singletons (NYT)
 
