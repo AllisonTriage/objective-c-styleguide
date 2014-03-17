@@ -24,12 +24,13 @@ The expecation is this:
     * [Deprecation] (#deprecation)
 
 * [Formatting] (#Formatting)
-    * [Line Spacing] (#line-spacing)
-    * [Character Spacing] (#character-spacing)
+    * [Line And Character Spacing] (#line-and-character-spacing)
     * [Methods](#methods)
 
-* [Classes] (#Classes)
-    * [Init & Dealloc](#init-and-dealloc) 
+* [Classes] (#classes)
+    * [Init and Dealloc](#init-and-dealloc) 
+    * [Abstraction, Categories and Copied Code] (#abstraction,-categories-and-copied-code)
+    * [Multiple Classes in a File] (#multiple-classes-in-a-File)
 
 * [Properties And Member Variables] (#properties-and-member-variables)
     * [Dot-Notation Syntax](#dot-notation-syntax)
@@ -40,8 +41,10 @@ The expecation is this:
     * [Image Naming](#image-naming)
     * [Constants](#constants)
     * [Literals](#literals)
+    * [Primitive Data Types](#Primitive-Data-Types)
     * [Booleans](#booleans)
     * [Enumerated Types](#enumerated-types)
+    * [Magic Numbers] (#magic-numbers)
 
 
 * [General Code Quality] (#general-code-quality)
@@ -49,43 +52,25 @@ The expecation is this:
     * [Ternary Operator](#ternary-operator)
     * [Error handling](#error-handling)
     * [Singletons](#singletons)
-
-* [Third Party Code] (#third-party-code)
+    * [NSArrays] (#nsarrays)
 
 * [Parsing] (#parsing)
 
+* [Third Party Code] (#third-party-code)
 
---- GCC formatting for frames and other groups of similar object setup code.
---- Keep methods short
---- ban ternary operator!
---- methods should have names before the : for each parameter.
---- in @interface lines, there should be a space before and after each : 
---- methods should be formatted with a space after the '-' and before each ':' and before each '*', there should be no other spaces in a method name.
---- Every class should have an interface in the .m for private methods and properties
---- Every class should have a dealloc 
---- NSDictionaries should use the new notation: NSDictionary *bucketDict = @{key: bucket};
---- Deprication and rewrites.
 
-Coding Standards more than style guide / Common problems seen in project
---- No longer use primitive data types
---- self. should not be used to access properties in init methods.
---- every class written should user arc
---- ALL parsing will be done with JSON Parser
---- objects in an array should never be counted in a for loop unless the number of objects in the array is at rick of changing in the body of the loop:     for (int i = 0; i < [self.buckets count]; i++)  is incorrect.  The items will be counted every single run through.
---- 
+Coding Standards And Style Guide / Common problems seen in project
+<!--
+//Things I'm not including but think I should:
+//Strings/Copy should be in a localization file and not in line
+-->
 
-Ideally - 
---- Strings/Copy should be in a localization file and not in line
---- As few magic numbers as possible.  when magic numbers are necessary make them 
-static NSString * const FONT_NAME = @"Helvetica";
-static CGFloat const  NUMBER_TEXT_SIZE_IN_CIRCLE_PERCENTAGE = 0.40;
---- If you use a method across many classes that are similar consider abstraction or categories.
 
 ## Xcode project
 
-The physical files should be kept in sync with the Xcode project files in order to avoid file sprawl. Any Xcode groups created should be reflected by folders in the filesystem. Code should be grouped not only by type, but also by feature for greater clarity.
+The physical files should be kept in sync with the Xcode project files in order to avoid file sprawl. Any Xcode groups created should be reflected by folders in the filesystem. Code should be grouped not only by type, but also by feature for greater clarity. (NYT)
 
-When possible, always turn on "Treat Warnings as Errors" in the target's Build Settings and enable as many [additional warnings](http://boredzo.org/blog/archives/2009-11-07/warnings) as possible. If you need to ignore a specific warning, use [Clang's pragma feature](http://clang.llvm.org/docs/UsersManual.html#controlling-diagnostics-via-pragmas).
+When possible, always turn on "Treat Warnings as Errors" in the target's Build Settings and enable as many [additional warnings](http://boredzo.org/blog/archives/2009-11-07/warnings) as possible. If you need to ignore a specific warning, use [Clang's pragma feature](http://clang.llvm.org/docs/UsersManual.html#controlling-diagnostics-via-pragmas). (NYT)
 
 ## Documentation
 
@@ -98,17 +83,29 @@ If large amounts of legacy code are being considered for being commented out, re
 
 #### Apple Doc
 
+Every new public method will have documentation in the .h
+
+**For example:**
+  ```objc
+
+/**
+ * Takes the basic data needed to populate the cell and sets the labels.
+ *
+ * @param topCopy the copy which will appear in the top label of the cell
+ * @param bottomCopy the copy which will appear in the bottom label of the cell
+ * @return void
+ */
+-(void) setCellLabels:(NSString*)topCopy wtihBottomCopy:(NSString*)bottomCopy;
+  ```
+
 #### Deprication
 
-## Formatting
+When new code is written which invalidates or obsoletes old code, the old code will use the obsolete tag to denote the fact to developers.
 
-#### LineSpacing
-
-#### CharacterSpacing
+#### Line and Character Spacing
 
 * Indent using 4 spaces. Never indent with tabs. Be sure to set this preference in Xcode.
 * Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line. (NYT)
-
 **For example (NYT):**
 
   ```objc
@@ -120,14 +117,18 @@ If large amounts of legacy code are being considered for being commented out, re
     }
   ```
 * There should be exactly one blank line before each of the following:
-  * an if statement 
-  * a block
-  * before a method
-  * a new group of functionality within a method, however, if a method has disctinct groups of separate functionality, it should probably be broken apart into new methods.
+  * An if statement 
+  * A block
+  * Before a method
+  * A new group of functionality within a method, however, if a method has disctinct groups of separate functionality, it should probably be broken apart into new methods.
 
 #### Methods
 
-In method signatures, there should be a space after the scope (-/+ symbol). There should be a space between the method segments. (NYT)
+* In method signatures, there should be a space after the scope (-/+ symbol). There should be a space between the method segments. (NYT)
+* Keep methods short, methods should exceute one idea, multiple ideas should be broken into smaller pieces.
+* Methods will have names before the : for each parameter.
+* Every method will have a return type
+* Every parameter will have a type
 
 **For Example (NYT)**:
 ```objc
@@ -136,12 +137,17 @@ In method signatures, there should be a space after the scope (-/+ symbol). Ther
 
 ## Classes
 * `@synthesize` and `@dynamic` should each be declared on new lines in the implementation. (NYT)
+* `@interface` lines will should be a space before and after each : 
+* Every class should have an interface in the .m for private methods and properties
+* Every new class written will user ARC
 
-#### init and dealloc (NYT)
+#### Init and Dealloc
 
-`dealloc` methods should be placed at the top of the implementation, directly after the `@synthesize` and `@dynamic` statements. `init` should be placed directly below the `dealloc` methods of any class.
+`self` will not be used to access properties in init methods, this incldes `self.variable` and `[self variable]`.
 
-`init` methods should be structured like this:
+`dealloc` methods should be placed at the top of the implementation, directly after the `@synthesize` and `@dynamic` statements. `init` should be placed directly below the `dealloc` methods of any class. (NYT)
+
+`init` methods should be structured like this (NYT):
 
 ```objc
 - (instancetype)init {
@@ -153,6 +159,15 @@ In method signatures, there should be a space after the scope (-/+ symbol). Ther
     return self;
 }
 ```
+
+#### Abstraction, Categories and Copied Code
+
+Do not copy and paste more than 5 lines of code.  Code which needs to be reused should be made into a new method.  If the code needs to be reused across classes, consider creating a base class or category.
+
+#### Multiple Classes in a File
+
+Because the iTriage project has a large amount of data there are many cases where entire JSON objects are parsed into smaller objects which make sense to be visually grouped together in one file.  When there are multiple classes in a file, use `#pragma mark - ClassName` to distinguish the division.
+
 
 ## Properties / Member Variables
 
@@ -319,7 +334,7 @@ static const CGFloat NYTImageThumbnailHeight = 50.0;
 #define thumbnailHeight 2
 ```
 
-## Literals (NYT)
+#### Literals (NYT)
 
 `NSString`, `NSDictionary`, `NSArray`, and `NSNumber` literals should be used whenever creating immutable instances of those objects. Pay special care that `nil` values not be passed into `NSArray` and `NSDictionary` literals, as this will cause a crash.
 
@@ -340,6 +355,9 @@ NSDictionary *productManagers = [NSDictionary dictionaryWithObjectsAndKeys: @"Ka
 NSNumber *shouldUseLiterals = [NSNumber numberWithBool:YES];
 NSNumber *buildingZIPCode = [NSNumber numberWithInteger:10018];
 ```
+
+#### Primitive Data Types
+No longer use primitive data types as member variables, instead use NSInteger, CGFloat etc.
 
 #### Booleans (NYT)
 
@@ -398,6 +416,17 @@ typedef NS_ENUM(NSInteger, NYTAdRequestState) {
     NYTAdRequestStateLoading
 };
 ```
+
+#### Magic Numbers
+
+Code should contain as few magic numbers as possible.  When magic numbers and other hard-coded variables are necessary declare them at the top of the file for easy changing.  Do not use `#define`
+
+**Example:**
+```objc
+static NSString * const FONT_NAME = @"Helvetica";
+static CGFloat const  NUMBER_TEXT_SIZE_IN_CIRCLE_PERCENTAGE = 0.40;
+```
+
 ## General Code Quality
 
 #### Conditionals (NYT)
@@ -427,7 +456,7 @@ if (!error) return success;
 
 Do not use Ternary Operators.   
 
-## Error handling (NYT)
+#### Error handling (NYT)
 
 When methods return an error parameter by reference, switch on the returned value, not the error variable.
 
@@ -467,3 +496,12 @@ Singleton objects should use a thread-safe pattern for creating their shared ins
 }
 ```
 This will prevent [possible and sometimes prolific crashes](http://cocoasamurai.blogspot.com/2011/04/singletons-your-doing-them-wrong.html).
+
+#### NSArrays
+
+--- objects in an array should never be counted in a for loop unless the number of objects in the array is at rick of changing in the body of the loop:     for (int i = 0; i < [self.buckets count]; i++)  is incorrect.  The items will be counted every single run through.
+
+## [Parsing] (#parsing)
+--- ALL parsing will be done with JSON Parser
+
+## [Third Party Code] (#third-party-code)
