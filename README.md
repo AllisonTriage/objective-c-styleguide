@@ -23,7 +23,7 @@ The expecation is this:
     * [Apple Doc] (#apple-doc)
     * [Deprecation] (#deprecation)
 
-* [Formatting] (#Formatting)
+* [Formatting] (#formatting)
     * [Line And Character Spacing] (#line-and-character-spacing)
     * [Methods](#methods)
 
@@ -115,6 +115,7 @@ When new code is written which invalidates or obsoletes old code, the old code w
 */
 - (NSInteger)fooMethodWithParam:(NSInteger)param;
 ```
+## Formatting 
 
 #### Line and Character Spacing
 
@@ -513,9 +514,70 @@ This will prevent [possible and sometimes prolific crashes](http://cocoasamurai.
 
 #### NSArrays
 
---- objects in an array should never be counted in a for loop unless the number of objects in the array is at rick of changing in the body of the loop:     for (int i = 0; i < [self.buckets count]; i++)  is incorrect.  The items will be counted every single run through.
+Objects in an array should never be counted in a for loop unless the number of objects in the array is at risk of changing in the body of the loop:     
+
+**For Example:**
+```objc
+int count = self.buckets.count;
+for (int i = 0; i < count; i++) {
+  NSLog(@"Pr-int:%d", i);
+}
+```
+
+Counting the items this way means that the number of items in the array are counted each loop through, therefore the 
+
+**Not:**
+```objc
+for (int i = 0; i < self.buckets.count; i++) {
+  NSLog(@"Pr-int:%d", i);
+}
+```
 
 ## [Parsing] (#parsing)
---- ALL parsing will be done with JSON Parser
 
+ALL parsing will be done using the third party library: [JSONModel] (http://www.jsonmodel.com/)
+
+The documentation is very helpful and is available here: [JSONModel Documentation] (https://github.com/icanzilb/JSONModel/blob/master/README.md#magical-data-modelling-framework-for-json).
+
+All classes which subclass JSONModel will override the keymapper method.
+
+**For Example:**
+From [JSONModel Documentation] (https://github.com/icanzilb/JSONModel/blob/master/README.md#magical-data-modelling-framework-for-json)
+
+Example JSON
+```json
+{
+  "order_id": 104,
+  "order_product" : @"Product#1",
+  "order_price" : 12.95
+}
+```
+
+OrderModel.h
+```objc
+@interface OrderModel : JSONModel
+
+@property (assign, nonatomic) int orderId;
+@property (assign, nonatomic) float orderPrice;
+@property (strong, nonatomic) NSString* orderProduct;
+
+@end
+```
+
+OrderModel.m
+```objc
+@implementation OrderModel
+
++(JSONKeyMapper*)keyMapper {
+  return [JSONKeyMapper mapperFromUnderscoreCaseToCamelCase];
+}
+
+@end
+```
+
+
+<!--ADD DETAILS-->
+
+<!-- THIS NEEDS TO HAVE DETAILS ABOUT WHAT LISCENSES WE ARE OKAY WITH
 ## [Third Party Code] (#third-party-code)
+-->
