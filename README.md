@@ -98,9 +98,23 @@ Every new public method will have documentation in the .h
 -(void) setCellLabels:(NSString*)topCopy wtihBottomCopy:(NSString*)bottomCopy;
   ```
 
-#### Deprication
+#### Deprecation
 
-When new code is written which invalidates or obsoletes old code, the old code will use the obsolete tag to denote the fact to developers.
+When new code is written which invalidates or obsoletes old code, the old code will use the obsolete tag to denote the fact to developers.  Include a note to the developer about what to use instead and/or why the method is deprecated.
+
+**For Example**
+```objc
+//Method returns an int instead of an NSInteger please use fooMethodWithParam instead.
+- (int)fooMethod:(int)param __deprecated;
+
+/**
+* Method returns the same NSInteger which is passed in
+* 
+* @param param - passed in will be returned by method
+* @return - NSInteger which was passed into method.
+*/
+- (NSInteger)fooMethodWithParam:(NSInteger)param;
+```
 
 #### Line and Character Spacing
 
