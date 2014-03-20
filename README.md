@@ -1,4 +1,9 @@
-## Allison Allain / iTriage Objective-C Style Guide
+<!-- 
+Compiled by Allison Allain 
+March 2014
+-->
+
+#iTriage Objective-C Style Guide
 
 ## Attributions
 * [NYTimes Objective-C Style Guide] (https://github.com/NYTimes/objective-c-style-guide)
